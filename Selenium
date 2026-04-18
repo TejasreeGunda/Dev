@@ -1,0 +1,35 @@
+from selenium import webdriver
+
+from selenium.webdriver.common.by import By
+
+import time
+
+
+
+# Set up Edge WebDriver path
+
+driver = webdriver.Edge(executable_path="path_to_msedge_driver")
+
+
+
+# Open Google homepage
+
+driver.get("https://www.google.com")
+
+time.sleep(2)
+
+
+
+# Inspect the search box element
+
+search_box = driver.find_element(By.NAME, "q")
+
+print("Search box element found:", search_box)
+
+
+
+# Close the browser
+
+driver.quit()
+
+
