@@ -1,0 +1,86 @@
+Create a Simple HTML File
+
+1.	Open a text editor and create a new file named index.html.
+
+2.	Add the following HTML content:
+
+3.	<!DOCTYPE html>
+
+4.	<html>
+
+5.	<head>
+
+6.	    <title>Hello, World!</title>
+
+7.	</head>
+
+8.	<body>
+
+9.	    <h1>Hello, World!</h1>
+
+10.	</body>
+
+</html>
+
+11.	Save the file in a new directory (e.g., docker-webpage).
+
+Step 2: Create a Dockerfile
+
+1.	In the same directory, create a file named Dockerfile (without any extension).
+
+2.	Add the following content to the Dockerfile:
+
+3.	# Use an official Nginx image as the base image
+
+4.	FROM nginx:latest
+
+5.	
+
+6.	# Copy the HTML file to the Nginx default directory
+
+7.	COPY index.html /usr/share/nginx/html/index.html
+
+8.	
+
+9.	# Expose port 80
+
+EXPOSE 80
+
+10.	Save the file.
+
+Step 3: Build the Docker Image
+
+1.	Open a terminal or command prompt and navigate to the docker-webpage directory.
+
+2.	Run the following command to build the Docker image:
+
+docker build -t my-html-app .
+
+Step 4: Run the Docker Container
+
+1.	Use the following command to start a container from the built image:
+
+docker run -d -p 8080:80 my-html-app
+
+2.	This maps port 80 of the container to port 8080 of the local machine.
+
+Step 5: View the Webpage
+
+1.	Open a web browser and enter the following URL:
+
+http://localhost:8080
+
+2.	You should see the message "Hello, World!" displayed.
+
+Step 6: Stop and Remove the Container (Optional)
+
+•	To stop the container, run:
+
+•	docker ps   # To find the running container ID
+
+docker stop <container_id>
+
+•	To remove the container, run:
+
+docker rm <container_id>
+
