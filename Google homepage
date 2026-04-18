@@ -1,0 +1,59 @@
+1.	Import Required Modules:
+
+from selenium import webdriver
+
+from selenium.webdriver.common.by import By
+
+from selenium.webdriver.common.keys import Keys
+
+            import time
+
+2.	Launch Microsoft Edge and Open Google Homepage:
+
+driver = webdriver.Edge()
+
+driver.get("https://www.google.com")
+
+            driver.maximize_window()
+
+3.	Identify and Test Web Elements:
+
+Google Search Box:
+
+search_box = driver.find_element(By.NAME, "q")
+
+search_box.send_keys("Selenium Web Testing")
+
+search_box.send_keys(Keys.RETURN) time.sleep(3)
+
+Google Search Button (Optional as pressing RETURN in search box works):
+
+search_button = driver.find_element(By.NAME, "btnK")
+
+print("Google Search button found.")
+
+Google Apps Button:
+
+apps_button = driver.find_element(By.CLASS_NAME, "gb_D")
+
+print("Google Apps button located.")
+
+Sign-in Button:
+
+sign_in_button = driver.find_element(By.LINK_TEXT, "Sign in")
+
+print("Sign-in button located.")
+
+Footer Elements:
+
+footer_links = driver.find_elements(By.TAG_NAME, "a")
+
+for link in footer_links:
+
+    	print(link.text, "->", link.get_attribute("href"))
+
+4.	Close the Browser:
+
+driver.quit()
+
+
