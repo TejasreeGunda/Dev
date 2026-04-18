@@ -1,0 +1,70 @@
+from selenium import webdriver
+
+from selenium.webdriver.common.by import By
+
+from selenium.webdriver.common.keys import Keys
+
+import time
+
+
+
+# Set up Edge WebDriver
+
+EDGE_DRIVER_PATH = "C:\\WebDriver\\msedgedriver.exe"
+
+options = webdriver.EdgeOptions()
+
+driver = webdriver.Edge(executable_path=EDGE_DRIVER_PATH, options=options)
+
+
+
+# Open Facebook Login Page
+
+driver.get("https://www.facebook.com/")
+
+time.sleep(3)  # Allow page to load
+
+
+
+# Locate the email and password fields
+
+email_field = driver.find_element(By.ID, "email")
+
+password_field = driver.find_element(By.ID, "pass")
+
+login_button = driver.find_element(By.NAME, "login")
+
+
+
+# Enter credentials
+
+email_field.send_keys("your_email@example.com")  # Replace with your email
+
+password_field.send_keys("your_password")  # Replace with your password
+
+
+
+# Click login
+
+login_button.click()
+
+time.sleep(5)  # Wait for login process
+
+
+
+# Verify login success by checking homepage URL
+
+if "facebook.com" in driver.current_url:
+
+    print("Login successful! Facebook homepage loaded.")
+
+else:
+
+    print("Login failed. Check credentials.")
+
+
+
+# Close the browser
+
+driver.quit()
+
