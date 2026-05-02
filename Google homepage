@@ -1,58 +1,61 @@
-1.	Import Required Modules:
-
 from selenium import webdriver
-
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-            import time
-
-2.	Launch Microsoft Edge and Open Google Homepage:
-
-driver = webdriver.Edge()
+# --- If driver is NOT in PATH, set path like below ---
+service = Service("C:\\Users\\tejas\\Downloads\\edgedriver_win64\\msedgedriver.exe")
+driver = webdriver.Edge(service=service)
 
 driver.get("https://www.google.com")
+driver.maximize_window()
 
-            driver.maximize_window()
+wait = WebDriverWait(driver, 10)
 
-3.	Identify and Test Web Elements:
+# (Optional) Handle cookie/consent popup if it appears
+try:
+    btn = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[.//text()[contains(.,'Accept')]]")))
+    btn.click()
+except:
+    pass
 
-Google Search Box:
-
-search_box = driver.find_element(By.NAME, "q")
-
+# 1) Google Search Box
+search_box = wait.until(EC.presence_of_element_located((By.NAME, "q")))
 search_box.send_keys("Selenium Web Testing")
+search_box.send_keys(Keys.RETURN)
 
-search_box.send_keys(Keys.RETURN) time.sleep(3)
+# Wait for results page to load
+wait.until(EC.presence_of_element_located((By.ID, "search")))
 
-Google Search Button (Optional as pressing RETURN in search box works):
+# 2) Google Search Button (optional)
+# (Button is dynamic; better to check presence after typing)
+try:
+    search_button = wait.until(EC.presence_of_element_located((By.NAME, "btnK")))
+    print("Google Search button found.")
+except:
+    print("Search button not found (normal after results load).")
 
-search_button = driver.find_element(By.NAME, "btnK")
+# 3) Google Apps Button (grid icon)
+try:
+    apps_button = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@aria-label='Google apps']")))
+    print("Google Apps button located.")
+except:
+    print("Apps button not found.")
 
-print("Google Search button found.")
+# 4) Sign-in Button
+try:
+    sign_in_button = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Sign in")))
+    print("Sign-in button located.")
+except:
+    print("Sign-in button not found.")
 
-Google Apps Button:
-
-apps_button = driver.find_element(By.CLASS_NAME, "gb_D")
-
-print("Google Apps button located.")
-
-Sign-in Button:
-
-sign_in_button = driver.find_element(By.LINK_TEXT, "Sign in")
-
-print("Sign-in button located.")
-
-Footer Elements:
-
+# 5) Footer Links (collect all <a> tags and print text + href)
 footer_links = driver.find_elements(By.TAG_NAME, "a")
-
-for link in footer_links:
-
-    	print(link.text, "->", link.get_attribute("href"))
-
-4.	Close the Browser:
+print("\nSome links on page:")
+for link in footer_links[:10]:   # limit to first 10 for readability
+    print(link.text, "->", link.get_attribute("href"))
 
 driver.quit()
 
