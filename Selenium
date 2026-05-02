@@ -1,24 +1,23 @@
 from selenium import webdriver
-
 from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-import time
+# Driver setup
+service = Service("C:\\WebDriver\\msedgedriver.exe")
+driver = webdriver.Edge(service=service)
 
-
-
-# Set up Edge WebDriver path
-
-driver = webdriver.Edge(executable_path="path_to_msedge_driver")
-
-
-
-# Open Google homepage
-
+# Open Google
 driver.get("https://www.google.com")
 
-time.sleep(2)
+# Wait until search box is visible
+wait = WebDriverWait(driver, 10)
+search_box = wait.until(EC.presence_of_element_located((By.NAME, "q")))
 
+print("Search box element found:", search_box)
 
+driver.quit()
 
 # Inspect the search box element
 
